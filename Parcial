@@ -1,0 +1,249 @@
+/// David Alexander Torres Caicedo 
+//Ronald Alfonso Gomez Caicedo 
+
+
+#include <iostream>
+using namespace std;
+
+struct cliente {
+
+	int id;
+	char nimbre[30];
+	int edad;
+	char genero;
+	char motivo[50];
+	struct cliente *sig;
+	
+};
+
+
+struct Historial {
+    cliente Cliente;
+    struct Historial *sig; 
+};
+
+struct cliente *cab = NULL, *aux = NULL, *aux2 = NULL;
+struct Historial *pilaHistorial = NULL;
+int hombres = 0, mujeres = 0;
+
+
+//funcion para agregar
+
+void agregar(){
+    
+	aux = (struct cliente *)malloc(sizeof(struct cliente));
+	if (aux == NULL) {
+		cout << "Error: no se pudo asignar memoria." << endl;
+		return;
+	}
+
+    int Nueid;
+    int siEsta; 
+
+    do {
+        siEsta = 0; 
+        cout << "Ingrese ID del cliente: ";
+        cin >> Nueid;
+
+        for (aux2 = cab; aux2 != NULL; aux2 = aux2->sig) {
+            if (aux2->id == Nueid) {
+                cout << "El ID ya existe. Por favor ingrese otro ID." << endl;
+                siEsta++; 
+                break; 
+            }
+        }
+    } while (siEsta > 0);
+    aux->id = Nueid; 
+    
+	cin.ignore();
+	cout << "Ingrese Nombre del cliente: ";
+	cin.getline(aux->nimbre, 30);
+    
+    do {
+        cout << "Digite su edad: ";
+    cin >> aux->edad;
+        if (aux->edad < 18) cout << "No se pueden atender menores de edad.\n";
+    } while (aux->edad < 18);
+    
+    do {
+        cout << "Elija su género (M/F): ";
+        cin >> aux->genero;
+    } while (aux->genero != 'M' && aux->genero!= 'F');
+
+    if ((aux->genero == 'M' && (hombres - mujeres) >= 4) || (aux->genero == 'F' && (mujeres - hombres) >= 4)) {
+        cout << "No se puede agregar, la diferencia entre géneros es mayor a 4.\n";
+        free(aux);
+        return;
+    }
+            
+ cout<<endl;
+    cin.ignore();
+	cout << "Ingrese el motivo de la llamada: ";
+	cin.getline(aux->motivo, 30);
+
+	aux->sig = NULL;
+
+	if (cab == NULL) {
+		cab = aux;
+	} else {
+		aux2 = cab;
+		while (aux2->sig != NULL) {
+			aux2 = aux2->sig;
+		}
+		aux2->sig = aux;
+	}
+}
+
+// Funcion para mostrar los cliente
+
+
+void mostraCliente() {
+  int  cont=0;
+  if (!aux) cout << "No hay clientes en espera.\n";
+    for (aux = cab; aux != NULL; aux = aux->sig) {
+        cont++;
+        cout<<"CLIENTE "<<cont<<endl;
+        cout<<endl;
+        cout << "ID: " << aux->id <<endl;
+        cout<< "Nombre: " << aux->nimbre << endl;
+        cout<< "Edad: " << aux->edad << endl;
+        cout<< "Genero: " << aux->genero << endl;
+        cout<< "motivo de la llamada: " << aux->motivo << endl;
+        cout<<endl;
+    }
+    
+}
+
+// Funcion pa contar clientes
+void contarCliente() {
+    int contar = 0;
+    for (aux = cab; aux != NULL; aux = aux->sig) {
+        contar++;
+    }
+    cout << "Total de clientes en espera: " << contar << endl;
+}
+
+// Función pars liberar memoria cuando se sale del sistema
+void liberarMemoria() {
+    while (cab != NULL) {
+        aux = cab;
+        cab = cab->sig;
+        free(aux);
+    }
+    cout << "Memoria liberada correctamente." << endl;
+}
+
+ //fincion para atender
+void atenderCliente() {
+    if (!cab) {
+        cout << "No hay clientes para atender.\n";
+        return;
+    }
+
+    struct cliente *atendido = cab;
+    cab = cab->sig; 
+    if (!cab) aux = NULL;
+
+    struct Historial *nuevoHistorial = (struct Historial *)malloc(sizeof(struct Historial)); 
+    if (nuevoHistorial == NULL) {
+        cout << "Error: no se pudo asignar memoria para el historial." << endl;
+        return;
+    }
+
+    nuevoHistorial->Cliente = *atendido; 
+    nuevoHistorial->sig = pilaHistorial; 
+    pilaHistorial = nuevoHistorial;
+
+    cout << "Cliente atendido: " << atendido->nimbre << "\n";
+    (atendido->genero == 'M') ? hombres-- : mujeres--;
+    free(atendido); 
+}
+
+
+ // funcion para mostrar el historial
+
+void mostrarHistorial() {
+    struct Historial *aux = pilaHistorial;
+    if (!aux) {
+        cout << "Historial vacío.\n";
+        return;
+    }
+    while (aux) {
+        cout << "ID: " << aux->Cliente.id << " | Nombre: " << aux->Cliente.nimbre << "\n"; 
+        aux = aux->sig;
+    }
+}
+
+// funcion para deshacer al cliente atendido
+void deshacerAtencion() {
+    if (!pilaHistorial) {
+        cout << "No hay atenciones para deshacer.\n";
+        return;
+    }
+
+    struct cliente *restaurado = (struct cliente *)malloc(sizeof(struct cliente));
+    if (!restaurado) {
+        cout << "Error al asignar memoria.\n";
+        return;
+    }
+    *restaurado = pilaHistorial->Cliente;
+    struct Historial *temp = pilaHistorial;
+    pilaHistorial = pilaHistorial->sig;
+    free(temp);
+
+    restaurado->sig = cab;
+    cab = restaurado;
+    if (!aux) aux = restaurado;
+    (restaurado->genero == 'M') ? hombres++ : mujeres++;
+    cout << "Última atención deshecha. Cliente devuelto a la espera.\n";
+}
+
+
+int main(){
+    
+int opc;
+
+     do{
+        
+       cout << "\n------ MENU------ " << endl;
+        cout << "1) Agregar cliente" << endl;
+        cout << "2) Mostrar clientes en espera" << endl;
+        cout << "3) Contar clientes en espera" << endl;
+        cout << "4) Atender siguiente cliente" << endl;
+        cout << "5) Mostrar historial de atendidos" << endl;
+        cout << "6) Deshacer ultima atancion" << endl;
+        cout << "7) Salir" << endl;
+        cout<<endl;
+        cout<<"Elige una opcion: ";
+         cin>>opc;
+         cout<<endl;
+         switch (opc) {
+            case 1:
+                agregar();
+                break;
+            case 2:
+                mostraCliente();
+                break;
+            case 3:
+                contarCliente();
+                break;    
+            case 4:
+                atenderCliente();
+                break;  
+                case 5:
+                mostrarHistorial();
+             break; 
+              case 6:
+             deshacerAtencion();
+             break;
+     }        
+} while (opc != 7);
+    
+    liberarMemoria();
+    return 0;
+
+
+
+
+}
+             
