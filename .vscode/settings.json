@@ -55,6 +55,7 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
+<<<<<<< HEAD
 HEAD
  HEAD
  HEAD
@@ -72,4 +73,7 @@ HEAD
 
   "C_Cpp_Runner.msvcSecureNoWarnings": false
  master
+=======
+  "C_Cpp_Runner.msvcSecureNoWarnings": false
+>>>>>>> 601acb365901e4494c88e4d94c3772fe058d3890
 }
