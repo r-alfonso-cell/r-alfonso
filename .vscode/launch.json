@@ -10,6 +10,7 @@
       "externalConsole": true,
  HEAD
  HEAD
+ HEAD
       "cwd": "c:/Users/ivonp/OneDrive/Documentos/GitHub/Taller2",
       "program": "c:/Users/ivonp/OneDrive/Documentos/GitHub/Taller2/build/Debug/outDebug",
 
@@ -20,6 +21,10 @@
       "cwd": "c:/Users/ivonp/OneDrive/Desktop/EDD",
       "program": "c:/Users/ivonp/OneDrive/Desktop/EDD/build/Debug/outDebug",
  254d14a (parcial2.cpp)
+
+      "cwd": "c:/Users/ivonp/OneDrive/Desktop/EDD",
+      "program": "c:/Users/ivonp/OneDrive/Desktop/EDD/build/Debug/outDebug",
+ master
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

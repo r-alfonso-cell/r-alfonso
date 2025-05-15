@@ -55,17 +55,21 @@
   "C_Cpp_Runner.useLeakSanitizer": false,
   "C_Cpp_Runner.showCompilationTime": false,
   "C_Cpp_Runner.useLinkTimeOptimization": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
+HEAD
+ HEAD
+ HEAD
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "files.associations": {
     "iostream": "cpp",
     "ostream": "cpp"
   }
-=======
+
   "C_Cpp_Runner.msvcSecureNoWarnings": false
->>>>>>> cd266e8d9fc8bec168e94d3cc8cca16aadd3f937
-=======
+ cd266e8d9fc8bec168e94d3cc8cca16aadd3f937
+
   "C_Cpp_Runner.msvcSecureNoWarnings": false
->>>>>>> 254d14a (parcial2.cpp)
+254d14a (parcial2.cpp)
+
+  "C_Cpp_Runner.msvcSecureNoWarnings": false
+ master
 }
