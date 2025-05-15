@@ -8,13 +8,18 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-<<<<<<< HEAD
+ HEAD
+ HEAD
       "cwd": "c:/Users/ivonp/OneDrive/Documentos/GitHub/Taller2",
       "program": "c:/Users/ivonp/OneDrive/Documentos/GitHub/Taller2/build/Debug/outDebug",
-=======
+
       "cwd": "c:/Users/ivonp/OneDrive/Documentos/GitHub/TallerEDD",
       "program": "c:/Users/ivonp/OneDrive/Documentos/GitHub/TallerEDD/build/Debug/outDebug",
->>>>>>> cd266e8d9fc8bec168e94d3cc8cca16aadd3f937
+ cd266e8d9fc8bec168e94d3cc8cca16aadd3f937
+
+      "cwd": "c:/Users/ivonp/OneDrive/Desktop/EDD",
+      "program": "c:/Users/ivonp/OneDrive/Desktop/EDD/build/Debug/outDebug",
+ 254d14a (parcial2.cpp)
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
