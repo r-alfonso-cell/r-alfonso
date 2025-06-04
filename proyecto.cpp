@@ -120,52 +120,38 @@ int balanceo(struct pelicula* nuevaRaiz) {
     return 0;
 }
 
+
+pelicula* construirArbolBalanceado(int inicio, int fin, peli *&cursor) {
+    if (inicio > fin) return NULL;
+
+    int mitad = (inicio + fin) / 2;
+
+    pelicula *izq = construirArbolBalanceado(inicio, mitad - 1, cursor);
+
+    pelicula *nuevo = (pelicula*) malloc(sizeof(pelicula));
+    strcpy(nuevo->nombre, cursor->nombre);
+    strcpy(nuevo->genero, cursor->genero);
+    nuevo->fecha = cursor->fecha;
+    nuevo->dinero = cursor->dinero;
+    nuevo->izq = izq;
+
+    cursor = cursor->sig;
+
+    nuevo->der = construirArbolBalanceado(mitad + 1, fin, cursor);
+
+    return nuevo;
+}
+
 void reconstruirArbolBalanceado() {
-    // Paso 1: Contar elementos
     int total = 0;
-    peli* tmp = cab;
+    peli *tmp = cab;
     while (tmp != NULL) {
         total++;
         tmp = tmp->sig;
     }
 
-    // Paso 2: Obtener nodo central
-    int mitad = total / 2;
-    peli* actual = cab;
-    int i = 0;
-    while (i < mitad && actual != NULL) {
-        actual = actual->sig;
-        i++;
-    }
-
-    if (actual == NULL) return;
-
-    // Paso 3: Crear nueva raíz
-    raiz = (struct pelicula*) malloc(sizeof(struct pelicula));
-    strcpy(raiz->nombre, actual->nombre);
-    strcpy(raiz->genero, actual->genero);
-    raiz->dinero = actual->dinero;
-    raiz->fecha = actual->fecha;
-    raiz->izq = raiz->der = NULL;
-
-    // Paso 4: Insertar el resto
-    peli* cursor = cab;
-    i = 0;
-    while (cursor != NULL) {
-        if (cursor != actual) {
-            aux = (struct pelicula*) malloc(sizeof(struct pelicula));
-            strcpy(aux->nombre, cursor->nombre);
-            strcpy(aux->genero, cursor->genero);
-            aux->dinero = cursor->dinero;
-            aux->fecha = cursor->fecha;
-            aux->izq = aux->der = NULL;
-
-            aux2 = raiz;
-            posicionarpelicula();
-        }
-        cursor = cursor->sig;
-        i++;
-    }
+    peli *cursor = cab;
+    raiz = construirArbolBalanceado(0, total - 1, cursor);
 }
 
 int postorden(struct pelicula* nuevaRaiz) {
